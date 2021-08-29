@@ -54,7 +54,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
@@ -212,7 +212,7 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../libs/litehtml/include;../libs/litehtml/src;../libs/cairo/src;../libs/txdib;../libs/simpledib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../libs/litehtml/include;../libs/cairo/src;../libs/freeimage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -231,7 +231,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
       <Profile>true</Profile>
-      <AdditionalDependencies>uxtheme.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;uxtheme.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <AdditionalManifestFiles>litebrowser.exe.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
@@ -271,7 +271,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-UTF8|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../libs/litehtml/include;../libs/litehtml/src;../libs/cairo/src;../libs/txdib;../libs/simpledib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../libs/litehtml/include;../libs/cairo/src;../libs/freeimage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;NO_TOOLBAR;LITEHTML_UTF8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -286,7 +286,7 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <Profile>true</Profile>
-      <AdditionalDependencies>uxtheme.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;uxtheme.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <AdditionalManifestFiles>litebrowser.exe.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
@@ -324,7 +324,7 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../libs/litehtml/include;../libs/litehtml/src;../libs/cairo/src;../libs/txdib;../libs/simpledib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../libs/litehtml/include;../libs/cairo/src;../libs/freeimage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;LITEHTML_UTF8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -343,7 +343,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
       <Profile>true</Profile>
-      <AdditionalDependencies>uxtheme.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;uxtheme.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <AdditionalManifestFiles>litebrowser.exe.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
