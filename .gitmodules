@@ -12,4 +12,4 @@
 	url = git@github.com:tordex/simpledib.git
 [submodule "libs/litehtml"]
 	path = libs/litehtml
-	url = git@github.com:tordex/litehtml.git
+	url = git@github.com:primatelabs/litehtml.git
