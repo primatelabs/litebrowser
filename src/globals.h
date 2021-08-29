@@ -18,8 +18,7 @@
 #include <algorithm>
 
 // include TxDIB project
-#include <TxDIB.h>
-#pragma comment(lib, "txdib.lib")
+#include "TxDIB.h"
 
 // include CAIRO project
 #include <cairo.h>
@@ -27,8 +26,7 @@
 #pragma comment(lib, "cairo.lib")
 
 // include SIMPLEDIB project
-#include <dib.h>
-#pragma comment(lib, "simpledib.lib")
+#include "dib.h"
 
 #pragma comment(lib, "shlwapi.lib")
 #pragma comment(lib, "Msimg32.lib")

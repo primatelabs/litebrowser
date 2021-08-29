@@ -18,12 +18,6 @@
     <ClCompile Include="BrowserWnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\libs\litehtml\containers\cairo\cairo_container.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libs\litehtml\containers\cairo\cairo_font.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="HtmlViewWnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -49,6 +43,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sl_edit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TxDIB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cairo_container.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cairo_font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
