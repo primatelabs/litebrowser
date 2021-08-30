@@ -26,11 +26,14 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#pragma once
-#include "TxThread.h"
+#ifndef LITEBROWSER_SL_EDIT_H__
+#define LITEBROWSER_SL_EDIT_H__
+
+#include "litebrowser/stdafx.h"
+
 #include "litebrowser/cairo_container.h"
 #include "litebrowser/cairo_font.h"
-
+#include "litebrowser/TxThread.h"
 
 #define WM_UPDATE_CONTROL	(WM_USER + 2001)
 #define WM_EDIT_ACTIONKEY	(WM_USER + 2003)
@@ -99,3 +102,5 @@ private:
 	void	getTextExtentPoint(LPCWSTR text, int cbText, LPSIZE sz);
 	void	set_color(cairo_t* cr, litehtml::web_color color)	{ cairo_set_source_rgba(cr, color.red / 255.0, color.green / 255.0, color.blue / 255.0, color.alpha / 255.0); }
 };
+
+#endif //LITEBROWSER_SL_EDIT_H__

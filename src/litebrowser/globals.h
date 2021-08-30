@@ -29,23 +29,19 @@
 #ifndef LITEBROWSER_GLOBALS_H__
 #define LITEBROWSER_GLOBALS_H__
 
-#define ISOLATION_AWARE_ENABLED		1
+#include "litebrowser/stdafx.h"
 
-#define GDIPVER	0x0110
-
-#include <stdlib.h>
 #include <malloc.h>
 #include <memory.h>
+#include <stdlib.h>
 #include <tchar.h>
-#include <litehtml.h>
 #include <algorithm>
 
-#include "litebrowser/windows_target.h"
+#include "litebrowser/browser_application.h"
+#include "litehtml.h"
 
-#include <commctrl.h>
-#include <gdiplus.h>
-#include <shlwapi.h>
-#include <winhttp.h>
+extern CAppModule app_module;
+extern BrowserApplication application;
 
 // include TxDIB project
 #include "litebrowser/TxDIB.h"

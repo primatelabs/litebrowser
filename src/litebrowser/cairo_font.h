@@ -29,7 +29,8 @@
 #ifndef LITEBROWSER_CAIRO_FONT_H__
 #define LITEBROWSER_CAIRO_FONT_H__
 
-#include "litebrowser/windows_target.h"
+#include "litebrowser/stdafx.h"
+
 #include <stdlib.h>
 #include <malloc.h>
 #include <memory.h>

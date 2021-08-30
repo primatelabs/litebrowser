@@ -29,6 +29,9 @@
 #ifndef LITEBROWSER_WEB_HISTORY_H__
 #define LITEBROWSER_WEB_HISTORY_H__
 
+#include <string>
+#include <vector>
+
 typedef std::vector<std::wstring> string_vector;
 
 class web_history

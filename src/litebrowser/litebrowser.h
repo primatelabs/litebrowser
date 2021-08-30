@@ -29,6 +29,8 @@
 #ifndef LITEBROWSER_LITEBROWSER_H__
 #define LITEBROWSER_LITEBROWSER_H__
 
-#include "resource.h"
+#include "litebrowser/stdafx.h"
+
+#include "litebrowser/resource.h"
 
 #endif // LITEBROWSER_LITEBROWSER_H__

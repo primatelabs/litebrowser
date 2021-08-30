@@ -29,7 +29,7 @@
 #ifndef LITEBROWSER_CAIRO_CONTAINER_H__
 #define LITEBROWSER_CAIRO_CONTAINER_H__
 
-#include "litebrowser/windows_target.h"
+#include "litebrowser/stdafx.h"
 
 #include <mlang.h>
 #include <stdlib.h>

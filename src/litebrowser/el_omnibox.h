@@ -26,8 +26,12 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#pragma once
-#include "sl_edit.h"
+#ifndef LITEBROWSER_EL_OMNIBOX_H__
+#define LITEBROWSER_EL_OMNIBOX_H__
+
+#include "litebrowser/stdafx.h"
+
+#include "litebrowser/sl_edit.h"
 
 #define WM_OMNIBOX_CLICKED	(WM_USER + 10002)
 
@@ -76,3 +80,5 @@ public:
 	BOOL OnMouseMove(int x, int y);
 
 };
+
+#endif // LITEBROWSER_EL_OMNIBOX_H__

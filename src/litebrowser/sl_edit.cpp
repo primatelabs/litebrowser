@@ -26,9 +26,9 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include "globals.h"
-#include "sl_edit.h"
-#include "ctrl_container.h"
+#include "litebrowser/sl_edit.h"
+
+#include "litebrowser/globals.h"
 
 CSingleLineEditCtrl::CSingleLineEditCtrl(HWND parent, cairo_container* container) : m_textColor(0, 0, 0)
 {

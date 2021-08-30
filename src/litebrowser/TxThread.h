@@ -29,7 +29,7 @@
 #ifndef LITEBROWSER_TX_THREAD_H__
 #define LITEBROWSER_TX_THREAD_H__
 
-#include "litebrowser/windows_target.h"
+#include "litebrowser/stdafx.h"
 
 class CTxThread
 {

@@ -26,12 +26,13 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include "globals.h"
-#include "html_view_window.h"
-#include <WindowsX.h>
-#include <algorithm>
+#include "litebrowser/html_view_window.h"
+
 #include <strsafe.h>
-#include "browser_window.h"
+
+#include <algorithm>
+
+#include "litebrowser/browser_window.h"
 
 CHTMLViewWnd::CHTMLViewWnd(HINSTANCE hInst, litehtml::context* ctx, CBrowserWnd* parent)
 {
@@ -836,7 +837,9 @@ void CHTMLViewWnd::OnPageReady()
 		redraw(NULL, FALSE);
 		set_caption();
 		update_history();
-		m_parent->on_page_loaded(url.c_str());
+		if (m_parent) {
+			m_parent->on_page_loaded(url.c_str());
+		}
 	}
 }
 

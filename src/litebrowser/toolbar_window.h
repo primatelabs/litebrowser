@@ -26,7 +26,11 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#pragma once
+#ifndef LITEBROWSER_TOOLBAR_WINDOW_H__
+#define LITEBROWSER_TOOLBAR_WINDOW_H__
+
+#include "litebrowser/stdafx.h"
+
 #include "litebrowser/cairo_container.h"
 #include "litebrowser/dib.h"
 #include "litebrowser/el_omnibox.h"
@@ -93,3 +97,5 @@ private:
 	void render_toolbar(int width);
 	void update_cursor();
 };
+
+#endif // LITEBROWSER_TOOLBAR_WINDOW_H__

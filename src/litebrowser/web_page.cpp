@@ -26,8 +26,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include "litebrowser/globals.h"
 #include "litebrowser/web_page.h"
+
 #include "litebrowser/html_view_window.h"
 
 

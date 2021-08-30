@@ -29,6 +29,8 @@
 #ifndef LITEBROWSER_WEB_PAGE_H__
 #define LITEBROWSER_WEB_PAGE_H__
 
+#include "litebrowser/stdafx.h"
+
 #include "litebrowser/cairo_container.h"
 #include "litebrowser/cairo_font.h"
 #include "litebrowser/tordexhttp.h"

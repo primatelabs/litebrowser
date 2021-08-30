@@ -1,4 +1,5 @@
 // Copyright (c) 2014, tordex
+// Copyright (c) 2021 Primate Labs Inc.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -26,10 +27,13 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include "globals.h"
-#include "litebrowser.h"
-#include "browser_window.h"
-#include "..\containers\cairo\cairo_font.h"
+#include "litebrowser/litebrowser.h"
+
+#include "litebrowser/browser_window.h"
+#include "litebrowser/cairo_font.h"
+
+BrowserApplication application; 
+CAppModule app_module;
 
 #pragma comment( lib, "gdiplus.lib" )
 #pragma comment( lib, "shlwapi.lib" )
@@ -38,43 +42,45 @@ using namespace Gdiplus;
 
 CRITICAL_SECTION cairo_font::m_sync;
 
-int APIENTRY _tWinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPTSTR    lpCmdLine,
-                     int       nCmdShow)
+int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
-	CoInitialize(NULL);
-	InitCommonControls();
+	application.instance(hInstance);
+
+	app_module.Init(NULL, hInstance);
+	AtlAxWinInit();
+
+	CMessageLoop message_loop;
+	app_module.AddMessageLoop(&message_loop);
 
 	InitializeCriticalSectionAndSpinCount(&cairo_font::m_sync, 1000);
 
-	GdiplusStartupInput gdiplusStartupInput;
-	ULONG_PTR gdiplusToken;
-	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+	GdiplusStartupInput gdiplus_startup_input;
+	ULONG_PTR gdiplus_token;
+	GdiplusStartup(&gdiplus_token, &gdiplus_startup_input, NULL);
 
-	{
-		CBrowserWnd wnd(hInstance);
-
-		wnd.create();
-		if(lpCmdLine && lpCmdLine[0])
-		{
-			wnd.open(lpCmdLine);
-		} else
-		{
-			wnd.open(L"http://www.dmoz.org/");
-		}
-
-		MSG msg;
-
-		while (GetMessage(&msg, NULL, 0, 0))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
+	BrowserWindow window;
+	if (window.CreateEx() == NULL) {
+		return 1;
 	}
 
-	GdiplusShutdown(gdiplusToken);
+	// window.CenterWindow();
+	window.ShowWindow(nCmdShow);
+	window.UpdateWindow();
+
+	// CBrowserWnd wnd(hInstance);
+	// wnd.create();
+
+	if(lpCmdLine && lpCmdLine[0]) {
+		window.OpenURL(lpCmdLine);
+	} else {
+		window.OpenURL(L"http://www.dmoz.org/");
+	}
+
+	message_loop.Run();
+
+	Gdiplus::GdiplusShutdown(gdiplus_token);
+
+	app_module.Term();
 
 	return 0;
 }
-

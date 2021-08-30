@@ -1,4 +1,5 @@
 // Copyright (c) 2014, tordex
+// Copyright (c) 2021 Primate Labs Inc.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -29,44 +30,51 @@
 #ifndef LITEBROWSER_BROWSER_WINDOW_H__
 #define LITEBROWSER_BROWSER_WINDOW_H__
 
-#include "litebrowser/globals.h"
-#include "litebrowser/windows_target.h"
-#include "litehtml.h"
+#include "litebrowser/stdafx.h"
 
-#define BROWSERWND_CLASS	L"BROWSER_WINDOW"
+#include "litebrowser/globals.h"
+#include "litebrowser/resource.h"
+
+#include "litehtml.h"
 
 class CHTMLViewWnd;
 class CToolbarWnd;
 
-class CBrowserWnd
-{
-	HWND				m_hWnd;
-	HINSTANCE			m_hInst;
-	CHTMLViewWnd*		m_view;
-#ifndef NO_TOOLBAR
-	CToolbarWnd*		m_toolbar;
-#endif
-	litehtml::context	m_browser_context;
-public:
-	CBrowserWnd(HINSTANCE hInst);
-	virtual ~CBrowserWnd(void);
+class BrowserWindow;
 
-	void create();
-	void open(LPCWSTR path);
+typedef CWinTraits<WS_OVERLAPPEDWINDOW, WS_EX_APPWINDOW> BrowserWindowTraits;
+typedef CFrameWindowImpl<BrowserWindow, CWindow, BrowserWindowTraits> BrowserWindowBase;
 
-	void back();
-	void forward();
-	void reload();
-	void calc_time(int calc_repeat = 1);
-	void on_page_loaded(LPCWSTR url);
-
+class BrowserWindow : public BrowserWindowBase, public CUpdateUI<BrowserWindow>, public CMessageFilter {
 protected:
-	virtual void OnCreate();
-	virtual void OnSize(int width, int height);
-	virtual void OnDestroy();
+	litehtml::context context_;
+	CHTMLViewWnd* view_ = nullptr;
 
-private:
-	static LRESULT CALLBACK WndProc(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lParam);
+public:
+	DECLARE_FRAME_WND_CLASS(NULL, IDR_MAINFRAME);
+
+	BEGIN_UPDATE_UI_MAP(BrowserWindow)
+	END_UPDATE_UI_MAP()
+
+	BEGIN_MSG_MAP(BrowserWindow)
+		MSG_WM_CREATE(OnCreate);
+		MSG_WM_DESTROY(OnDestroy);
+
+		MSG_WM_SIZE(OnSize);
+
+		CHAIN_MSG_MAP(CUpdateUI<BrowserWindow>);
+		CHAIN_MSG_MAP(BrowserWindowBase);
+	END_MSG_MAP()
+
+	LRESULT OnCreate(LPCREATESTRUCT lpcs);
+	
+	void OnDestroy();
+
+	LRESULT OnSize(UINT type, CSize extent);
+
+	void OpenURL(LPCWSTR path);
+
+	BOOL PreTranslateMessage(MSG* pMsg);
 };
 
 #endif // LITEBROWSER_BROWSER_WINDOW_H__

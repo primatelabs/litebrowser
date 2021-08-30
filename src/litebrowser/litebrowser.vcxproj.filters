@@ -57,6 +57,9 @@
     <ClCompile Include="toolbar_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="browser_application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="globals.h">
@@ -86,9 +89,6 @@
     <ClInclude Include="sl_edit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ctrl_container.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="browser_window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -104,7 +104,10 @@
     <ClInclude Include="cairo_font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="windows_target.h">
+    <ClInclude Include="browser_application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

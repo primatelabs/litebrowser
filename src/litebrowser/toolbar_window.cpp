@@ -28,8 +28,6 @@
 
 #include "litebrowser/toolbar_window.h"
 
-#include <WindowsX.h>
-
 #include "litebrowser/browser_window.h"
 #include "litebrowser/el_omnibox.h"
 #include "litebrowser/globals.h"

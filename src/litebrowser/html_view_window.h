@@ -26,9 +26,13 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#pragma once
-#include "web_page.h"
-#include "web_history.h"
+#ifndef LITEBROWSER_HTML_VIEW_WINDOW_H__
+#define LITEBROWSER_HTML_VIEW_WINDOW_H__
+
+#include "litebrowser/stdafx.h"
+
+#include "litebrowser/web_history.h"
+#include "litebrowser/web_page.h"
 
 #define HTMLVIEWWND_CLASS	L"HTMLVIEW_WINDOW"
 
@@ -116,3 +120,5 @@ inline void CHTMLViewWnd::unlock()
 {
 	LeaveCriticalSection(&m_sync);
 }
+
+#endif // LITEBROWSER_HTML_VIEW_WINDOW_H__

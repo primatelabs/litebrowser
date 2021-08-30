@@ -26,11 +26,13 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#pragma once
+#ifndef LITEBROWSER_TORDEXHTTP_H__
+#define LITEBROWSER_TORDEXHTTP_H__
 
-#include <Windows.h>
-#include <winhttp.h>
+#include "litebrowser/stdafx.h"
+
 #include <stdlib.h>
+
 #include <vector>
 
 namespace tordex
@@ -143,3 +145,5 @@ namespace tordex
 	}
 
 }
+
+#endif // LITEBROWSER_TORDEXHTTP_H__

@@ -9,7 +9,6 @@
 #define IDR_MAINFRAME                   128
 #define IDR_HTML1                       129
 #define IDR_CSS1                        130
-#define IDC_STATIC                      -1
 
 // Next default values for new objects
 //
