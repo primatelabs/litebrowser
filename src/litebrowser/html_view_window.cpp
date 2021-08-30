@@ -1,9 +1,9 @@
 #include "globals.h"
-#include "HtmlViewWnd.h"
+#include "html_view_window.h"
 #include <WindowsX.h>
 #include <algorithm>
 #include <strsafe.h>
-#include "BrowserWnd.h"
+#include "browser_window.h"
 
 CHTMLViewWnd::CHTMLViewWnd(HINSTANCE hInst, litehtml::context* ctx, CBrowserWnd* parent)
 {

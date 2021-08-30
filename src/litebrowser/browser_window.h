@@ -1,5 +1,10 @@
 #pragma once
 
+#include <Windows.h>
+#include <WindowsX.h>
+
+#include "litehtml.h"
+
 #define BROWSERWND_CLASS	L"BROWSER_WINDOW"
 
 class CHTMLViewWnd;

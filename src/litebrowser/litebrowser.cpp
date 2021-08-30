@@ -1,6 +1,6 @@
 #include "globals.h"
 #include "litebrowser.h"
-#include "BrowserWnd.h"
+#include "browser_window.h"
 #include "..\containers\cairo\cairo_font.h"
 
 #pragma comment( lib, "gdiplus.lib" )

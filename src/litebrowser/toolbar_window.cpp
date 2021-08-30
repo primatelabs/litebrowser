@@ -1,8 +1,10 @@
-#include "globals.h"
-#include "ToolbarWnd.h"
+#include "litebrowser/toolbar_window.h"
+
 #include <WindowsX.h>
-#include "BrowserWnd.h"
-#include "el_omnibox.h"
+
+#include "litebrowser/browser_window.h"
+#include "litebrowser/el_omnibox.h"
+#include "litebrowser/globals.h"
 
 #ifdef LITEHTML_UTF8
 	#define str_cmp	strcmp

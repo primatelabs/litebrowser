@@ -1,6 +1,6 @@
 #include "globals.h"
 #include "web_page.h"
-#include "HtmlViewWnd.h"
+#include "html_view_window.h"
 
 
 web_page::web_page(CHTMLViewWnd* parent)

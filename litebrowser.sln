@@ -3,18 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1321
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "litebrowser", "src\litebrowser.vcxproj", "{54AB6A6E-4B83-4B33-965F-DB8455C8C292}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B243BD14-9CEC-415C-9C14-EBC27D36FBD0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "litebrowser", "src\litebrowser\litebrowser.vcxproj", "{54AB6A6E-4B83-4B33-965F-DB8455C8C292}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5EEE68E7-3CB0-4ADB-AF72-4C0BB01F0B18} = {5EEE68E7-3CB0-4ADB-AF72-4C0BB01F0B18}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B243BD14-9CEC-415C-9C14-EBC27D36FBD0}"
-	ProjectSection(SolutionItems) = preProject
-		Performance1.psess = Performance1.psess
-		Performance2.psess = Performance2.psess
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "litehtml", "..\litehtml\litehtml.vcxproj", "{5EEE68E7-3CB0-4ADB-AF72-4C0BB01F0B18}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "litehtml", "src\litehtml\litehtml.vcxproj", "{5EEE68E7-3CB0-4ADB-AF72-4C0BB01F0B18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -15,16 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BrowserWnd.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HtmlViewWnd.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="litebrowser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ToolbarWnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tordexhttp.cpp">
@@ -57,21 +48,18 @@
     <ClCompile Include="cairo_font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="browser_window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="html_view_window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="toolbar_window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BrowserWnd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libs\litehtml\containers\cairo\cairo_container.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libs\litehtml\containers\cairo\cairo_font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="globals.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HtmlViewWnd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="litebrowser.h">
@@ -81,9 +69,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ToolbarWnd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tordexhttp.h">
@@ -105,6 +90,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ctrl_container.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="browser_window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="html_view_window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="toolbar_window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cairo_container.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cairo_font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -185,7 +185,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\libs\litehtml\include\master.css" />
     <None Include="html\toolbar.html" />
+    <None Include="..\litehtml\include\master.css" />
   </ItemGroup>
 </Project>

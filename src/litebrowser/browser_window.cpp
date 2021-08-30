@@ -1,7 +1,7 @@
 #include "globals.h"
-#include "BrowserWnd.h"
-#include "HtmlViewWnd.h"
-#include "ToolbarWnd.h"
+#include "browser_window.h"
+#include "html_view_window.h"
+#include "toolbar_window.h"
 
 CBrowserWnd::CBrowserWnd(HINSTANCE hInst)
 {

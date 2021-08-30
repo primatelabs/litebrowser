@@ -1,9 +1,9 @@
 [submodule "libs/cairo"]
-	path = libs/cairo
+	path = third_party/cairo
 	url = git@github.com:tordex/cairo.git
 [submodule "libs/freeimage"]
-	path = libs/freeimage
+	path = third_party/freeimage
 	url = git@github.com:tordex/freeimage.git
 [submodule "libs/litehtml"]
-	path = libs/litehtml
+	path = src/litehtml
 	url = git@github.com:primatelabs/litehtml.git
