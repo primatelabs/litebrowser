@@ -406,7 +406,7 @@
     <ClInclude Include="html_view_window.h" />
     <ClInclude Include="litebrowser.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="windows_target.h" />
     <ClInclude Include="sl_edit.h" />
     <ClInclude Include="toolbar_window.h" />
     <ClInclude Include="tordexhttp.h" />
