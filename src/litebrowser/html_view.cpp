@@ -308,7 +308,7 @@ void CHTMLViewWnd::DoPaint(CDCHandle dc)
 
 #if 1
 
-	m_dib.create(rect.right - rect.left, rect.bottom - rect.top);
+	m_dib.create(rect.right - rect.left, rect.bottom - rect.top, true);
 
 	render();
 	OnPaint(&m_dib, &rect);
@@ -322,10 +322,6 @@ void CHTMLViewWnd::DoPaint(CDCHandle dc)
 		rect.top,
 		SRCCOPY);
 #endif
-
-
-
-	SaveHBITMAPToFile(m_dib.bmp(), L"C:\\Users\\jfpoole\\dib.bmp");
 #endif
 }
 
