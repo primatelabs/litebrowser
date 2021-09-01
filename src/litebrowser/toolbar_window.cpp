@@ -1,3 +1,4 @@
+#if 0
 // Copyright (c) 2014, tordex
 //
 // Redistribution and use in source and binary forms, with or without
@@ -633,3 +634,4 @@ void CToolbarWnd::get_client_rect( litehtml::position& client ) const
 	client.width	= rcClient.right - rcClient.left;
 	client.height	= rcClient.bottom - rcClient.top;
 }
+#endif

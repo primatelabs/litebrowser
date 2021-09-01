@@ -1,3 +1,4 @@
+#if 0
 // Copyright (c) 2014, tordex
 //
 // Redistribution and use in source and binary forms, with or without
@@ -99,3 +100,4 @@ private:
 };
 
 #endif // LITEBROWSER_TOOLBAR_WINDOW_H__
+#endif

@@ -386,7 +386,7 @@
     <ClCompile Include="browser_window.cpp" />
     <ClCompile Include="dib.cpp" />
     <ClCompile Include="el_omnibox.cpp" />
-    <ClCompile Include="html_view_window.cpp" />
+    <ClCompile Include="html_view.cpp" />
     <ClCompile Include="litebrowser.cpp" />
     <ClCompile Include="browser_application.cpp" />
     <ClCompile Include="sl_edit.cpp" />
@@ -403,7 +403,7 @@
     <ClInclude Include="browser_window.h" />
     <ClInclude Include="el_omnibox.h" />
     <ClInclude Include="globals.h" />
-    <ClInclude Include="html_view_window.h" />
+    <ClInclude Include="html_view.h" />
     <ClInclude Include="litebrowser.h" />
     <ClInclude Include="browser_application.h" />
     <ClInclude Include="Resource.h" />
@@ -416,6 +416,7 @@
     <ClInclude Include="web_page.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="bitmap1.bmp" />
     <Image Include="html\addr-center.png" />
     <Image Include="html\addr-left.png" />
     <Image Include="html\addr-right.png" />
@@ -423,6 +424,7 @@
     <Image Include="html\back-disabled.png" />
     <Image Include="html\back-hover.png" />
     <Image Include="html\back-normal.png" />
+    <Image Include="html\buttons.png" />
     <Image Include="html\forward-active.png" />
     <Image Include="html\forward-disabled.png" />
     <Image Include="html\forward-hover.png" />
@@ -439,6 +441,7 @@
     <Image Include="html\toolbar-bg.png" />
     <Image Include="litebrowser.ico" />
     <Image Include="small.ico" />
+    <Image Include="toolbar.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="litebrowser.rc" />

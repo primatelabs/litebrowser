@@ -1,4 +1,5 @@
 // Copyright (c) 2014, tordex
+// Copyright (c) 2021 Primate Labs Inc.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -26,8 +27,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef LITEBROWSER_HTML_VIEW_WINDOW_H__
-#define LITEBROWSER_HTML_VIEW_WINDOW_H__
+#ifndef LITEBROWSER_HTML_VIEW_H__
+#define LITEBROWSER_HTML_VIEW_H__
 
 #include "litebrowser/stdafx.h"
 
@@ -39,12 +40,43 @@
 #define WM_IMAGE_LOADED		(WM_USER + 1000)
 #define WM_PAGE_LOADED		(WM_USER + 1001)
 
-using namespace litehtml;
-class CBrowserWnd;
+#if 0
+class HTMLView : public CScrollWindowImpl<HTMLView> {
+	litehtml::context* context_ = nullptr;
 
-class CHTMLViewWnd
-{
-	HWND						m_hWnd;
+	web_history history_;
+
+	web_page* page_ = nullptr;
+
+	web_page* page_next_ = nullptr;
+
+	simpledib::dib dib_;
+
+	void Render(LPRECT region);
+
+public:
+	DECLARE_WND_CLASS_EX(NULL, 0, -1)
+
+	HTMLView() = delete;
+
+	explicit HTMLView(litehtml::context* ctx);
+
+	virtual ~HTMLView();
+
+	BEGIN_MSG_MAP(HTMLView)
+		MESSAGE_HANDLER(WM_ERASEBKGND, OnEraseBackground);
+		CHAIN_MSG_MAP(CScrollWindowImpl<HTMLView>);
+	END_MSG_MAP()
+
+	BOOL PreTranslateMessage(MSG* pMsg);
+
+	LRESULT OnEraseBackground(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
+
+	void DoPaint(CDCHandle dc);
+};
+#endif
+
+class CHTMLViewWnd : public CScrollWindowImpl<CHTMLViewWnd> {
 	HINSTANCE					m_hInst;
 	int							m_top;
 	int							m_left;
@@ -56,22 +88,49 @@ class CHTMLViewWnd
 	web_page*					m_page_next;
 	CRITICAL_SECTION			m_sync;
 	simpledib::dib				m_dib;
-	CBrowserWnd*				m_parent;
+	void*				delegate_;
 public:
-	CHTMLViewWnd(HINSTANCE	hInst, litehtml::context* ctx, CBrowserWnd* parent);
+	DECLARE_WND_CLASS_EX(NULL, 0, -1);
+
+	BEGIN_MSG_MAP(CHTMLViewWnd)
+		// MESSAGE_HANDLER(WM_ERASEBKGND, OnEraseBackground);
+		CHAIN_MSG_MAP(CScrollWindowImpl<CHTMLViewWnd>);
+	END_MSG_MAP()
+
+	BOOL PreTranslateMessage(MSG* pMsg);
+
+	// LRESULT OnEraseBackground(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
+
+	void DoPaint(CDCHandle dc);
+
+
+	CHTMLViewWnd(HINSTANCE	hInst, litehtml::context* ctx, void* delegate);
+	
 	virtual ~CHTMLViewWnd(void);
 
-	void				create(int x, int y, int width, int height, HWND parent);
 	void				open(LPCWSTR url, bool reload = FALSE);
 	HWND				wnd()	{ return m_hWnd;	}
 	void				refresh();
 	void				back();
 	void				forward();
 
-	litehtml::context*	get_html_context();
+	litehtml::context*	get_html_context()
+	{
+		return m_context;
+	}
+
 	void				set_caption();
-	void				lock();
-	void				unlock();
+
+	void				lock()
+	{
+		EnterCriticalSection(&m_sync);
+	}
+
+	void				unlock()
+	{
+		LeaveCriticalSection(&m_sync);
+	}
+
 	bool				is_valid_page(bool with_lock = true);
 	web_page*			get_page(bool with_lock = true);
 
@@ -81,14 +140,8 @@ public:
 	void				update_history();
 
 protected:
-	virtual void		OnCreate();
+	
 	virtual void		OnPaint(simpledib::dib* dib, LPRECT rcDraw);
-	virtual void		OnSize(int width, int height);
-	virtual void		OnDestroy();
-	virtual void		OnVScroll(int pos, int flags);
-	virtual void		OnHScroll(int pos, int flags);
-	virtual void		OnMouseWheel(int delta);
-	virtual void		OnKeyDown(UINT vKey);
 	virtual void		OnMouseMove(int x, int y);
 	virtual void		OnLButtonDown(int x, int y);
 	virtual void		OnLButtonUp(int x, int y);
@@ -103,22 +156,7 @@ protected:
 	
 
 private:
-	static LRESULT	CALLBACK WndProc(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lParam);
+	// static LRESULT	CALLBACK WndProc(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lParam);
 };
 
-inline litehtml::context* CHTMLViewWnd::get_html_context()
-{
-	return m_context;
-}
-
-inline void CHTMLViewWnd::lock()
-{
-	EnterCriticalSection(&m_sync);
-}
-
-inline void CHTMLViewWnd::unlock()
-{
-	LeaveCriticalSection(&m_sync);
-}
-
-#endif // LITEBROWSER_HTML_VIEW_WINDOW_H__
+#endif // LITEBROWSER_HTML_VIEW_H__

@@ -1,4 +1,5 @@
 // Copyright (c) 2014, tordex
+// Copyright (c) 2021 Primate Labs Inc.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -28,13 +29,13 @@
 
 #include "litebrowser/web_page.h"
 
-#include "litebrowser/html_view_window.h"
+#include "litebrowser/html_view.h"
 
 
 web_page::web_page(CHTMLViewWnd* parent)
+: m_parent(parent)
 {
-	m_refCount		= 1;
-	m_parent		= parent;
+	m_refCount = 1;
 	m_http.open(L"litebrowser/1.0", WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS);
 }
 
@@ -202,7 +203,7 @@ void web_page::on_anchor_click( const litehtml::tchar_t* url, const litehtml::el
 {
 	std::wstring anchor;
 	t_make_url(url, NULL, anchor);
-	m_parent->open(anchor.c_str());
+	// m_parent->open(anchor.c_str());
 }
 
 void web_page::set_cursor( const litehtml::tchar_t* cursor )
@@ -490,7 +491,7 @@ unsigned char* web_page::load_utf8_file( LPCWSTR path, bool is_html, LPCWSTR def
 			CoInitialize(NULL);
 
 			IMultiLanguage* ml = NULL;
-			HRESULT hr = CoCreateInstance(CLSID_CMultiLanguage, NULL, CLSCTX_INPROC_SERVER, IID_IMultiLanguage, (LPVOID*) &ml);	
+			HRESULT hr = CoCreateInstance(CLSID_CMultiLanguage, NULL, CLSCTX_INPROC_SERVER, IID_IMultiLanguage, (LPVOID*) &ml);
 
 			MIMECSETINFO charset_src = {0};
 			MIMECSETINFO charset_dst = {0};
@@ -590,7 +591,7 @@ void web_file::OnFinish( DWORD dwError, LPCWSTR errMsg )
 		case web_file_waited:
 			m_page->on_waited_finished(dwError, m_file);
 			break;
-		}		
+		}
 	}
 }
 

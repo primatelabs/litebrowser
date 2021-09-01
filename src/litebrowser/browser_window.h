@@ -33,22 +33,26 @@
 #include "litebrowser/stdafx.h"
 
 #include "litebrowser/globals.h"
+#include "litebrowser/html_view.h"
 #include "litebrowser/resource.h"
 
 #include "litehtml.h"
-
-class CHTMLViewWnd;
-class CToolbarWnd;
 
 class BrowserWindow;
 
 typedef CWinTraits<WS_OVERLAPPEDWINDOW, WS_EX_APPWINDOW> BrowserWindowTraits;
 typedef CFrameWindowImpl<BrowserWindow, CWindow, BrowserWindowTraits> BrowserWindowBase;
 
-class BrowserWindow : public BrowserWindowBase, public CUpdateUI<BrowserWindow>, public CMessageFilter {
+class BrowserWindow : public BrowserWindowBase, 
+	public CUpdateUI<BrowserWindow>, 
+	public CMessageFilter,
+	public CIdleHandler {
 protected:
 	litehtml::context context_;
+
 	CHTMLViewWnd* view_ = nullptr;
+	
+	CCommandBarCtrl command_bar_;
 
 public:
 	DECLARE_FRAME_WND_CLASS(NULL, IDR_MAINFRAME);
@@ -60,11 +64,13 @@ public:
 		MSG_WM_CREATE(OnCreate);
 		MSG_WM_DESTROY(OnDestroy);
 
-		MSG_WM_SIZE(OnSize);
-
 		CHAIN_MSG_MAP(CUpdateUI<BrowserWindow>);
 		CHAIN_MSG_MAP(BrowserWindowBase);
 	END_MSG_MAP()
+
+	BrowserWindow();
+
+	virtual ~BrowserWindow();
 
 	LRESULT OnCreate(LPCREATESTRUCT lpcs);
 	
@@ -74,7 +80,9 @@ public:
 
 	void OpenURL(LPCWSTR path);
 
-	BOOL PreTranslateMessage(MSG* pMsg);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+
+	virtual BOOL OnIdle();
 };
 
 #endif // LITEBROWSER_BROWSER_WINDOW_H__

@@ -30,16 +30,41 @@
 #include "litebrowser/browser_window.h"
 
 #include "litebrowser/globals.h"
-#include "litebrowser/html_view_window.h"
+#include "litebrowser/html_view.h"
 #include "litebrowser/toolbar_window.h"
+
+BrowserWindow::BrowserWindow()
+{
+}
+
+BrowserWindow::~BrowserWindow()
+{
+	if (view_) {
+		delete view_;
+	}
+}
 
 LRESULT BrowserWindow::OnCreate(LPCREATESTRUCT lpcs)
 {
-	CMessageLoop* loop = app_module.GetMessageLoop();
-	ATLASSERT(loop != nullptr);
-	loop->AddMessageFilter(this);
-
 	HINSTANCE instance = application.instance();
+
+	// create command bar window
+	HWND hWndCmdBar = command_bar_.Create(m_hWnd, rcDefault, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);
+	// attach menu
+	command_bar_.AttachMenu(GetMenu());
+	// load command bar images
+	command_bar_.LoadImages(IDR_MAINFRAME);
+	// remove old menu
+	SetMenu(NULL);
+
+	HWND hWndToolBar = CreateSimpleToolBarCtrl(m_hWnd, IDR_MAINFRAME, FALSE, ATL_SIMPLE_TOOLBAR_PANE_STYLE);
+
+	CreateSimpleReBar(ATL_SIMPLE_REBAR_NOBORDER_STYLE);
+	AddSimpleReBarBand(hWndCmdBar);
+	AddSimpleReBarBand(hWndToolBar, NULL, TRUE);
+
+	CreateSimpleStatusBar();
+
 
 #if defined(LITEHTML_UTF8)
 	LPSTR css = NULL;
@@ -73,6 +98,7 @@ LRESULT BrowserWindow::OnCreate(LPCREATESTRUCT lpcs)
 		}
 	}
 #endif
+
 	if (css) {
 		context_.load_master_stylesheet(css);
 		delete css;
@@ -81,10 +107,22 @@ LRESULT BrowserWindow::OnCreate(LPCREATESTRUCT lpcs)
 	RECT client;
 	GetClientRect(&client);
 
-	view_ = new CHTMLViewWnd(application.instance(), &context_, nullptr);
-	view_->create(client.left, client.top, client.right - client.left, client.bottom - client.top, m_hWnd);
-	::SetFocus(view_->wnd());
+	view_ = new CHTMLViewWnd(instance, &context_, nullptr);
+	m_hWndClient = view_->Create(m_hWnd,
+		rcDefault,
+		NULL,
+		WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_HSCROLL | WS_VSCROLL,
+		WS_EX_CLIENTEDGE);
 
+	UIAddToolBar(hWndToolBar);
+	UISetCheck(ID_VIEW_TOOLBAR, 1);
+	UISetCheck(ID_VIEW_STATUS_BAR, 1);
+	
+	// Register object for message filtering and idle updates.
+	CMessageLoop* loop = app_module.GetMessageLoop();
+	ATLASSERT(loop != nullptr);
+	loop->AddMessageFilter(this);
+	loop->AddIdleHandler(this);
 
 	SetMsgHandled(false);
 	return 0;
@@ -92,27 +130,28 @@ LRESULT BrowserWindow::OnCreate(LPCREATESTRUCT lpcs)
 
 void BrowserWindow::OnDestroy()
 {
-	if (view_) {
-		delete view_;
-	}
 	SetMsgHandled(false);
 }
 
+#if 0
 LRESULT BrowserWindow::OnSize(UINT type, CSize extent)
 {
 	RECT client;
 	GetClientRect(&client);
-	::SetWindowPos(view_->wnd(), NULL, client.left, client.top, client.right - client.left, client.bottom - client.top, SWP_NOZORDER);
-	::UpdateWindow(view_->wnd());
+	if (view_) {
+		::SetWindowPos(view_->wnd(), NULL, client.left, client.top, client.right - client.left, client.bottom - client.top, SWP_NOZORDER);
+		::UpdateWindow(view_->wnd());
+	}
 	
 	SetMsgHandled(false);
 	return 0;
 }
+#endif
 
 void BrowserWindow::OpenURL(LPCWSTR path)
 {
 	if (view_)	{
-		view_->open(path, true);
+		// view_->open(path, true);
 	}
 }
 
@@ -120,4 +159,10 @@ void BrowserWindow::OpenURL(LPCWSTR path)
 BOOL BrowserWindow::PreTranslateMessage(MSG* pMsg)
 {
 	return BrowserWindowBase::PreTranslateMessage(pMsg);
+}
+
+BOOL BrowserWindow::OnIdle()
+{
+	UIUpdateToolBar();
+	return FALSE;
 }

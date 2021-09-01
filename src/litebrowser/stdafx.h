@@ -52,6 +52,7 @@
 #include <atlctrlw.h>
 #include <atlmisc.h>
 #include <atlddx.h>
+#include <atlscrl.h>
 #include <atlsplit.h>
 #include <atlribbon.h>
 
