@@ -306,13 +306,11 @@ void CHTMLViewWnd::DoPaint(CDCHandle dc)
 	RECT rect;
 	GetClientRect(&rect);
 
-#if 1
-
 	m_dib.create(rect.right - rect.left, rect.bottom - rect.top, true);
 
 	render();
 	OnPaint(&m_dib, &rect);
-#if 1
+
 	dc.BitBlt(rect.left,
 		rect.top,
 		rect.right - rect.left,
@@ -321,9 +319,91 @@ void CHTMLViewWnd::DoPaint(CDCHandle dc)
 		rect.left,
 		rect.top,
 		SRCCOPY);
-#endif
-#endif
 }
+
+LPARAM CHTMLViewWnd::OnMouseMove(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& /*bHandled*/)
+{
+	int x = GET_X_LPARAM(lParam);
+	int y = GET_Y_LPARAM(lParam);
+
+	web_page* page = get_page();
+
+	if (page) {
+		litehtml::position::vector redraw_boxes;
+		if (page->m_doc->on_mouse_over(x + m_left, y + m_top, x, y, redraw_boxes)) {
+			for (litehtml::position::vector::iterator box = redraw_boxes.begin(); box != redraw_boxes.end(); box++) {
+				box->x -= m_left;
+				box->y -= m_top;
+				RECT rcRedraw;
+				rcRedraw.left = box->left();
+				rcRedraw.right = box->right();
+				rcRedraw.top = box->top();
+				rcRedraw.bottom = box->bottom();
+				redraw(&rcRedraw, FALSE);
+			}
+			UpdateWindow();
+			update_cursor();
+		}
+		page->release();
+	}
+	return 0;
+}
+
+LPARAM CHTMLViewWnd::OnLButtonDown(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& /*bHandled*/)
+{
+	int x = GET_X_LPARAM(lParam);
+	int y = GET_Y_LPARAM(lParam);
+
+	web_page* page = get_page();
+	
+	if (page) {
+		litehtml::position::vector redraw_boxes;
+		if (page->m_doc->on_lbutton_down(x + m_left, y + m_top, x, y, redraw_boxes)) {
+			for (litehtml::position::vector::iterator box = redraw_boxes.begin(); box != redraw_boxes.end(); box++) {
+				box->x -= m_left;
+				box->y -= m_top;
+				RECT rcRedraw;
+				rcRedraw.left = box->left();
+				rcRedraw.right = box->right();
+				rcRedraw.top = box->top();
+				rcRedraw.bottom = box->bottom();
+				redraw(&rcRedraw, FALSE);
+			}
+			UpdateWindow();
+		}
+		page->release();
+	}
+	return 0;
+}
+
+LPARAM CHTMLViewWnd::OnLButtonUp(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& /*bHandled*/)
+{
+	int x = GET_X_LPARAM(lParam);
+	int y = GET_Y_LPARAM(lParam);
+
+	web_page* page = get_page();
+
+	if (page) {
+		litehtml::position::vector redraw_boxes;
+		if (page->m_doc->on_lbutton_up(x + m_left, y + m_top, x, y, redraw_boxes)) {
+			for (litehtml::position::vector::iterator box = redraw_boxes.begin(); box != redraw_boxes.end(); box++) {
+				box->x -= m_left;
+				box->y -= m_top;
+				RECT rcRedraw;
+				rcRedraw.left = box->left();
+				rcRedraw.right = box->right();
+				rcRedraw.top = box->top();
+				rcRedraw.bottom = box->bottom();
+				redraw(&rcRedraw, FALSE);
+			}
+			UpdateWindow();
+		}
+		page->release();
+	}
+	return 0;
+}
+
+
 
 void CHTMLViewWnd::redraw(LPRECT rcDraw, BOOL update)
 {
@@ -411,31 +491,6 @@ void CHTMLViewWnd::set_caption()
 	}
 }
 
-void CHTMLViewWnd::OnMouseMove( int x, int y )
-{
-	web_page* page = get_page();
-	if(page)
-	{
-		litehtml::position::vector redraw_boxes;
-		if(page->m_doc->on_mouse_over(x + m_left, y + m_top, x, y, redraw_boxes))
-		{
-			for(litehtml::position::vector::iterator box = redraw_boxes.begin(); box != redraw_boxes.end(); box++)
-			{
-				box->x -= m_left;
-				box->y -= m_top;
-				RECT rcRedraw;
-				rcRedraw.left	= box->left();
-				rcRedraw.right	= box->right();
-				rcRedraw.top	= box->top();
-				rcRedraw.bottom	= box->bottom();
-				redraw(&rcRedraw, FALSE);
-			}
-			UpdateWindow();
-			update_cursor();
-		}
-		page->release();
-	}
-}
 
 void CHTMLViewWnd::OnMouseLeave()
 {
@@ -445,60 +500,6 @@ void CHTMLViewWnd::OnMouseLeave()
 	{
 		litehtml::position::vector redraw_boxes;
 		if(page->m_doc->on_mouse_leave(redraw_boxes))
-		{
-			for(litehtml::position::vector::iterator box = redraw_boxes.begin(); box != redraw_boxes.end(); box++)
-			{
-				box->x -= m_left;
-				box->y -= m_top;
-				RECT rcRedraw;
-				rcRedraw.left	= box->left();
-				rcRedraw.right	= box->right();
-				rcRedraw.top	= box->top();
-				rcRedraw.bottom	= box->bottom();
-				redraw(&rcRedraw, FALSE);
-			}
-			UpdateWindow();
-		}
-
-		page->release();
-	}
-}
-
-void CHTMLViewWnd::OnLButtonDown( int x, int y )
-{
-	web_page* page = get_page();
-
-	if(page)
-	{
-		litehtml::position::vector redraw_boxes;
-		if(page->m_doc->on_lbutton_down(x + m_left, y + m_top, x, y, redraw_boxes))
-		{
-			for(litehtml::position::vector::iterator box = redraw_boxes.begin(); box != redraw_boxes.end(); box++)
-			{
-				box->x -= m_left;
-				box->y -= m_top;
-				RECT rcRedraw;
-				rcRedraw.left	= box->left();
-				rcRedraw.right	= box->right();
-				rcRedraw.top	= box->top();
-				rcRedraw.bottom	= box->bottom();
-				redraw(&rcRedraw, FALSE);
-			}
-			UpdateWindow();
-		}
-
-		page->release();
-	}
-}
-
-void CHTMLViewWnd::OnLButtonUp( int x, int y )
-{
-	web_page* page = get_page();
-
-	if(page)
-	{
-		litehtml::position::vector redraw_boxes;
-		if(page->m_doc->on_lbutton_up(x + m_left, y + m_top, x, y, redraw_boxes))
 		{
 			for(litehtml::position::vector::iterator box = redraw_boxes.begin(); box != redraw_boxes.end(); box++)
 			{

@@ -46,6 +46,32 @@ BrowserWindow::~BrowserWindow()
 
 LRESULT BrowserWindow::OnCreate(LPCREATESTRUCT lpcs)
 {
+	// Figure out the scaling factors in case we're running in HighDPI mode.
+	float scaleX = 1.0f;
+	float scaleY = 1.0f;
+	{
+		HDC hdc = ::GetDC(NULL);
+		if (hdc) {
+			float dpiX = static_cast<float>(GetDeviceCaps(hdc, LOGPIXELSX));
+			float dpiY = static_cast<float>(GetDeviceCaps(hdc, LOGPIXELSY));
+			scaleX = dpiX / 96.0f;
+			scaleY = dpiY / 96.0f;
+			::ReleaseDC(NULL, hdc);
+		}
+	}
+
+	// Figure out the default font metrics using a typical url.
+	HFONT defaultFont = AtlGetDefaultGuiFont();
+	const wchar_t* s = L"https://www.nytimes.com/";
+	CWindowDC dc(m_hWnd);
+	CRect rc(0, 0, 0, 0);
+	dc.SelectFont(defaultFont);
+	dc.DrawText(s, wcslen(s), &rc, DT_CALCRECT);
+	
+	// defaultFontHeight is  in "logical" pixels (font metrics return the size
+	// in device pixels).
+	const int defaultFontHeight = rc.bottom / scaleY;
+
 	HINSTANCE instance = application.instance();
 
 	// create command bar window
@@ -61,7 +87,18 @@ LRESULT BrowserWindow::OnCreate(LPCREATESTRUCT lpcs)
 
 	CreateSimpleReBar(ATL_SIMPLE_REBAR_NOBORDER_STYLE);
 	AddSimpleReBarBand(hWndCmdBar);
+	
+	// Add the toolbar (which doesn't contain anything useful yet).
 	AddSimpleReBarBand(hWndToolBar, NULL, TRUE);
+
+	// Create the address bar.
+	CString address;
+	address.LoadString(IDS_ADDRESS);
+	url_.Create(m_hWnd, CRect(0, 0, 0, defaultFontHeight * 2), NULL, WS_CHILD | WS_VISIBLE, WS_EX_STATICEDGE);
+	AddSimpleReBarBand(url_, address.GetBuffer(0), TRUE);
+	url_.SetFont(AtlGetDefaultGuiFont());
+
+	CReBarCtrl(m_hWndToolBar).LockBands(TRUE);
 
 	CreateSimpleStatusBar();
 
@@ -158,6 +195,24 @@ void BrowserWindow::OpenURL(LPCWSTR path)
 
 BOOL BrowserWindow::PreTranslateMessage(MSG* pMsg)
 {
+	if (BrowserWindowBase::PreTranslateMessage(pMsg)) {
+		return TRUE;
+	}
+
+	if (pMsg->message == WM_CHAR && url_ == pMsg->hwnd) {
+		switch (pMsg->wParam) {
+			case VK_RETURN: {
+				CString szURL;
+				int nLength = url_.GetWindowTextLength();
+				url_.GetWindowText(szURL.GetBuffer(nLength), nLength + 1);
+				szURL.ReleaseBuffer();
+				view_->open(szURL.GetBuffer());
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+
 	return BrowserWindowBase::PreTranslateMessage(pMsg);
 }
 

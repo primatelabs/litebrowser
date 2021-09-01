@@ -60,6 +60,9 @@ public:
 	BEGIN_MSG_MAP(CHTMLViewWnd)
 		MESSAGE_HANDLER(WM_IMAGE_LOADED, OnImageLoaded);
 		MESSAGE_HANDLER(WM_PAGE_LOADED, OnPageLoaded);
+		MESSAGE_HANDLER(WM_MOUSEMOVE, OnMouseMove);
+		MESSAGE_HANDLER(WM_LBUTTONDOWN, OnLButtonDown);
+		MESSAGE_HANDLER(WM_LBUTTONUP, OnLButtonUp);
 		// MESSAGE_HANDLER(WM_ERASEBKGND, OnEraseBackground);
 		CHAIN_MSG_MAP(CScrollWindowImpl<CHTMLViewWnd>);
 	END_MSG_MAP()
@@ -71,11 +74,16 @@ public:
 	LRESULT OnImageLoaded(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 
 	LRESULT OnPageLoaded(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
-
+	
 	void DoPaint(CDCHandle dc);
 
+	LPARAM OnMouseMove(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 
-	CHTMLViewWnd(HINSTANCE	hInst, litehtml::context* ctx, void* delegate);
+	LPARAM OnLButtonDown(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
+
+	LPARAM OnLButtonUp(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
+
+	CHTMLViewWnd(HINSTANCE hInst, litehtml::context* ctx, void* delegate);
 	
 	virtual ~CHTMLViewWnd(void);
 
@@ -113,9 +121,6 @@ public:
 protected:
 	
 	virtual void		OnPaint(simpledib::dib* dib, LPRECT rcDraw);
-	virtual void		OnMouseMove(int x, int y);
-	virtual void		OnLButtonDown(int x, int y);
-	virtual void		OnLButtonUp(int x, int y);
 	virtual void		OnMouseLeave();
 	virtual void		OnPageReady();
 	

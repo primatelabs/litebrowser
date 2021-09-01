@@ -54,6 +54,8 @@ protected:
 	
 	CCommandBarCtrl command_bar_;
 
+	CEdit url_;
+
 public:
 	DECLARE_FRAME_WND_CLASS(NULL, IDR_MAINFRAME);
 

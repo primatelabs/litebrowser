@@ -184,9 +184,13 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_CAN
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR 16, 15
+IDR_MAINFRAME TOOLBAR 32, 32
 BEGIN
-    BUTTON      ID_HELP_ABOUT
+    BUTTON      ID_BACK
+    BUTTON      ID_FORWARD
+    BUTTON      ID_STOP
+    BUTTON      ID_REFRESH
+    BUTTON      ID_HOME
 END
 
 
@@ -205,10 +209,25 @@ IDR_MAINFRAME           BITMAP                  "toolbar.bmp"
 
 IDR_MAINFRAME MENU
 BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "E&xit",                       ID_FILE_EXIT
+    END
     POPUP "&Help"
     BEGIN
         MENUITEM "&About",                      ID_HELP_ABOUT
     END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_ADDRESS             "Address"
 END
 
 #endif    // English (Canada) resources
