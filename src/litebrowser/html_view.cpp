@@ -80,11 +80,9 @@ LRESULT CALLBACK CHTMLViewWnd::WndProc( HWND hWnd, UINT uMessage, WPARAM wParam,
 			pThis->OnPageReady();
 			return 0;
 		case WM_IMAGE_LOADED:
-			if(wParam)
-			{
+			if(wParam) {
 				pThis->redraw(NULL, FALSE);
-			} else
-			{
+			} else {
 				pThis->render();
 			}
 			break;
@@ -285,15 +283,35 @@ void CHTMLViewWnd::render(BOOL calc_time, BOOL do_redraw, int calc_repeat)
 	}
 }
 
+LRESULT CHTMLViewWnd::OnImageLoaded(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+{
+	if (wParam) {
+		redraw(NULL, FALSE);
+	}
+	else {
+		render();
+	}
+	return 0;
+}
+
+LRESULT CHTMLViewWnd::OnPageLoaded(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+{
+	OnPageReady();
+	return 0;
+}
+
 
 void CHTMLViewWnd::DoPaint(CDCHandle dc)
 {
 	RECT rect;
 	GetClientRect(&rect);
 
+#if 1
+
 	m_dib.create(rect.right - rect.left, rect.bottom - rect.top);
 
 	render();
+	OnPaint(&m_dib, &rect);
 #if 1
 	dc.BitBlt(rect.left,
 		rect.top,
@@ -303,6 +321,11 @@ void CHTMLViewWnd::DoPaint(CDCHandle dc)
 		rect.left,
 		rect.top,
 		SRCCOPY);
+#endif
+
+
+
+	SaveHBITMAPToFile(m_dib.bmp(), L"C:\\Users\\jfpoole\\dib.bmp");
 #endif
 }
 

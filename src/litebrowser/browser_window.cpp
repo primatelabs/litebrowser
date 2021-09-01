@@ -151,7 +151,7 @@ LRESULT BrowserWindow::OnSize(UINT type, CSize extent)
 void BrowserWindow::OpenURL(LPCWSTR path)
 {
 	if (view_)	{
-		// view_->open(path, true);
+		view_->open(path, true);
 	}
 }
 

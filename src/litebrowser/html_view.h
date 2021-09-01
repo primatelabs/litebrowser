@@ -40,41 +40,6 @@
 #define WM_IMAGE_LOADED		(WM_USER + 1000)
 #define WM_PAGE_LOADED		(WM_USER + 1001)
 
-#if 0
-class HTMLView : public CScrollWindowImpl<HTMLView> {
-	litehtml::context* context_ = nullptr;
-
-	web_history history_;
-
-	web_page* page_ = nullptr;
-
-	web_page* page_next_ = nullptr;
-
-	simpledib::dib dib_;
-
-	void Render(LPRECT region);
-
-public:
-	DECLARE_WND_CLASS_EX(NULL, 0, -1)
-
-	HTMLView() = delete;
-
-	explicit HTMLView(litehtml::context* ctx);
-
-	virtual ~HTMLView();
-
-	BEGIN_MSG_MAP(HTMLView)
-		MESSAGE_HANDLER(WM_ERASEBKGND, OnEraseBackground);
-		CHAIN_MSG_MAP(CScrollWindowImpl<HTMLView>);
-	END_MSG_MAP()
-
-	BOOL PreTranslateMessage(MSG* pMsg);
-
-	LRESULT OnEraseBackground(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
-
-	void DoPaint(CDCHandle dc);
-};
-#endif
 
 class CHTMLViewWnd : public CScrollWindowImpl<CHTMLViewWnd> {
 	HINSTANCE					m_hInst;
@@ -93,6 +58,8 @@ public:
 	DECLARE_WND_CLASS_EX(NULL, 0, -1);
 
 	BEGIN_MSG_MAP(CHTMLViewWnd)
+		MESSAGE_HANDLER(WM_IMAGE_LOADED, OnImageLoaded);
+		MESSAGE_HANDLER(WM_PAGE_LOADED, OnPageLoaded);
 		// MESSAGE_HANDLER(WM_ERASEBKGND, OnEraseBackground);
 		CHAIN_MSG_MAP(CScrollWindowImpl<CHTMLViewWnd>);
 	END_MSG_MAP()
@@ -100,6 +67,10 @@ public:
 	BOOL PreTranslateMessage(MSG* pMsg);
 
 	// LRESULT OnEraseBackground(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
+
+	LRESULT OnImageLoaded(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
+
+	LRESULT OnPageLoaded(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 
 	void DoPaint(CDCHandle dc);
 
